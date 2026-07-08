@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile | LecTrack</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- PWA Link -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0e2954">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Manage your LecTrack academic profile. Seamlessly update your avatar and account settings for a premium university experience.">
+    <meta name="keywords" content="LecTrack profile, student settings, academic dashboard, university portal profile">
+    <meta name="author" content="LecTrack Institutional Systems">
+    <meta name="robots" content="noindex, nofollow"> <!-- Profile shouldn't be publicly indexed for security -->
+    
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.05) 0%, transparent 20%);
+        }
+        
+        .profile-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .back-nav a:hover {
+            color: var(--accent);
+        }
+
+        .profile-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .profile-dp {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.3);
+            margin: 0 auto 20px;
+            background: #fff;
+        }
+
+        .profile-card h2 {
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        .profile-card p {
+            color: var(--text-secondary);
+            margin: 0 0 30px 0;
+        }
+
+        .profile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn-generate {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-generate:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .google-warning {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: none;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        #loading-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(5px);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 212, 255, 0.2);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="back-nav">
+            <a href="home.html"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+
+        <div class="profile-card">
+            <div id="loading-overlay">
+                <div class="spinner"></div>
+                <p style="color: #fff; margin-top: 15px;">Saving Avatar...</p>
+            </div>
+            
+            <img src="logo.png" alt="Profile DP" class="profile-dp" id="profile-img">
+            <h2 id="profile-name">Loading...</h2>
+            <p id="profile-email">Please wait...</p>
+
+            <div class="google-warning" id="google-warning">
+                <i class="fa-solid fa-triangle-exclamation"></i> You signed in with Google. To change your picture, please update it in your Google Account settings.
+            </div>
+
+            <div class="profile-actions">
+                <button class="btn-generate" id="btn-generate-avatar" onclick="generateUniqueAvatar()">
+                    <i class="fa-solid fa-shuffle"></i> Generate Unique Avatar
+                </button>
+                <button class="btn-logout" onclick="logoutUser()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="profile.js"></script>
+    <script src="offline.js"></script>
+</body>
+</html>
