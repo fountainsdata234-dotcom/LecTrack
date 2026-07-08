@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LecTrack | Next-Gen Institutional Portal</title>
+    <link rel="icon" type="image/png" href="logo.png" id="dynamic-favicon">
+    
+    <!-- PWA Link -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0e2954">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="LecTrack is the premium academic portal for real-time course management, assignments, secure broadcasting, and streamlined student-lecturer interactions.">
+    <meta name="keywords" content="LecTrack, university portal, student dashboard, lecture tracking, assignment submission, academic management, school software">
+    <meta name="author" content="LecTrack Institutional Systems">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (Facebook/LinkedIn) -->
+    <meta property="og:title" content="LecTrack | Next-Gen Institutional Portal">
+    <meta property="og:description" content="A cutting-edge university platform for lectures, tracking grades, and real-time student interaction.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lectrack.example.com/">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:site_name" content="LecTrack">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LecTrack | Next-Gen Institutional Portal">
+    <meta name="twitter:description" content="A cutting-edge university platform for lectures, tracking grades, and real-time student interaction.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Essential Libraries (CDN) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+
+    <!-- 1. LIVELY BACKGROUND LAYERS -->
+    <div id="particles-js"></div>
+    <div class="mouse-blob-container">
+        <div class="blob b-black"></div>
+        <div class="blob b-skyblue"></div>
+    </div>
+
+    <!-- 2. NAVIGATION -->
+    <nav class="navbar gsap-reveal">
+        <div class="nav-container">
+            <div class="brand logo-wrapper" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <img src="logo.png?v=3" alt="LecTrack Logo" class="nav-logo" id="logo-img">
+                <div class="wave-text">
+                    <span class="wave-accent" style="--i:1">L</span>
+                    <span class="wave-accent" style="--i:2">e</span>
+                    <span class="wave-accent" style="--i:3">c</span>
+                    <span style="--i:4">T</span>
+                    <span style="--i:5">r</span>
+                    <span style="--i:6">a</span>
+                    <span style="--i:7">c</span>
+                    <span style="--i:8">k</span>
+                </div>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#" onclick="openAuth('login'); return false;">Login</a></li>
+                <li><a href="#" onclick="openAuth('register'); return false;" class="nav-btn-enroll">Enroll Now</a></li>
+            </ul>
+            <div class="hamburger" id="nav-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3. LANDING CONTENT SECTION -->
+    <section class="hero-section">
+        <div class="hero-content gsap-reveal">
+            <h4 class="badge">Official Academic Management</h4>
+            <h1>The Science of <br><span>Periodical Learning.</span></h1>
+            <p>Welcome to LecTrack. A professional environment designed for elite information tracking, periodic lectures, and real-time academic grading.</p>
+            <div class="hero-btns">
+                <a href="#about" class="btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="info-container gsap-reveal">
+            <div class="info-grid">
+                <div class="info-text">
+                    <h2>Academic <span>Excellence</span></h2>
+                    <p>LecTrack provides a seamless bridge between lecturers and students. Experience a portal where course materials are delivered with precision and performance is tracked with accuracy.</p>
+                    <ul class="feature-list">
+                        <li><i class="fa-solid fa-circle-check"></i> Periodic Lecture Delivery</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Interactive Assignment Hub</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Speedometer Grading Logic</li>
+                    </ul>
+                </div>
+                <div class="info-visual">
+                    <div class="animated-glass-box">
+                        <div class="inner-content">
+                            <span>2026</span>
+                            <p>Enrolling New Students</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA SECTION -->
+            <div class="auth-trigger-zone">
+                <button class="btn-main" onclick="openAuth('register')">Enroll with us now</button>
+                <button class="btn-sec" onclick="openAuth('login')">Access Student Portal</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. AUTHENTICATION MODAL (THE GATE) -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="modal-overlay" onclick="closeAuth()"></div>
+        <div class="modal-content glass-card">
+            <button class="close-modal" onclick="closeAuth()">&times;</button>
+            
+            <!-- FORM: LOGIN -->
+            <div id="login-form" class="form-panel">
+                <h2>Welcome Back</h2>
+                <p>Enter your institutional credentials</p>
+                <div class="input-group">
+                    <input type="email" id="l-email" placeholder="Student Email" required>
+                </div>
+                <div class="input-group pass-wrap">
+                    <input type="password" id="l-pass" placeholder="Password" required>
+                    <i class="fa-solid fa-eye eye-toggle" id="eye-l" onclick="togglePass('l-pass', 'eye-l')"></i>
+                </div>
+                <div class="forgot-row">
+                    <span onclick="handleForgot()">Forgotten Password?</span>
+                </div>
+                <button class="btn-main" id="btn-login" onclick="handleLogin()">Login to Hub</button>
+                <div class="divider"><span>OR</span></div>
+                <button class="btn-google" onclick="handleGoogleSignIn()">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg"> Sign in with Google
+                </button>
+                <p class="form-switch">New student? <span onclick="switchForm('register')">Enroll</span></p>
+            </div>
+
+            <!-- FORM: REGISTER (Enrollment) -->
+            <div id="register-form" class="form-panel hidden">
+                <h2>Enrollment</h2>
+                <p>Register with your unique Student ID</p>
+                <div class="input-group">
+                    <input type="text" id="r-name" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="r-email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group pass-wrap">
+                    <input type="password" id="r-pass" placeholder="Create Password" required>
+                    <i class="fa-solid fa-eye eye-toggle" id="eye-r" onclick="togglePass('r-pass', 'eye-r')"></i>
+                </div>
+                <div class="divider"><span>Security Check</span></div>
+                <div class="input-group">
+                    <input type="text" id="r-id" placeholder="Student ID (LT/XXX)" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="r-key" placeholder="Passcode" required>
+                </div>
+                <button class="btn-main" id="btn-reg" onclick="handleRegister()">Verify & Enroll</button>
+                <p class="form-switch">Already enrolled? <span onclick="switchForm('login')">Login</span></p>
+            </div>
+
+            <!-- FORM: GET ACCESS (WhatsApp Flow) -->
+            <div class="get-access-link">
+                <p>Need your ID and Passcode? <span onclick="requestAccess()">Request via WhatsApp</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Link -->
+    <script src="script.js"></script>    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('SW registered!', reg))
+                .catch(err => console.log('SW registration failed: ', err));
+            });
+        }
+    </script>
+    <script src="offline.js"></script>
+</body>
+</html>

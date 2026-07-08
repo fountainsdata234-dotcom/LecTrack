@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /profile.html
+Disallow: /sw.js
+Disallow: /manifest.json
+
+Sitemap: https://www.lectrack.com/sitemap.xml
